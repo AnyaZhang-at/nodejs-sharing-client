@@ -112,7 +112,8 @@ class DataSharingRestClient {
 
     static USER_AGENT = DataSharingRestClient.clientUserAgent();
 
-    constructor(profile, numRetries=10) {
+    // Use `headers` to pass in custom headers, "delta-sharing-capabilities", etc.
+    constructor(profile, numRetries=10, headers={}) {
         this._profile = profile;
         this._numRetries = numRetries;
         this._session = axios.create({
@@ -120,7 +121,8 @@ class DataSharingRestClient {
             timeout: 2000,
             headers: {
                 "Authorization": "Bearer " + profile.bearerToken,
-                "User-Agent": DataSharingRestClient.USER_AGENT
+                "User-Agent": DataSharingRestClient.USER_AGENT,
+                ...headers
             }
         });
     }
